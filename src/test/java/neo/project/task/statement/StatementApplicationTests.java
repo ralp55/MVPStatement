@@ -9,5 +9,14 @@ class StatementApplicationTests {
 	@Test
 	void contextLoads() {
 	}
+	@Test
+	void testConstructor() {
+		new StatementApplication();
+	}
 
+	@Test
+	void testMainMethod() {
+		String[] args = {};
+		StatementApplication.main(args);
+	}
 }
