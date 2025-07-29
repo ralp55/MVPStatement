@@ -3,6 +3,10 @@ package neo.project.task.statement.dto;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -11,50 +15,48 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Entity
 @Table(name = "statement")
 @Schema(description = "Заявка")
-public class Statement {
+public class StatementDto {
 
     @Id
     @GeneratedValue
-    @Column(name = "statement_id", columnDefinition = "uuid")
     @Schema(description = "ID заявки")
     private UUID statementId;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @NotNull(message = "Информация о клиенте обязательна")
     @Schema(description = "Клиент")
     private Client client;
 
-    @Column(name = "credit_id")
+    @NotNull(message = "ID кредита обязательно")
     @Schema(description = "ID кредита")
     private UUID creditId;
 
+    @NotNull(message = "Статус заявки обязателен")
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
     @Schema(description = "Текущий статус заявки")
     private ApplicationStatus status;
 
-    @Column(name = "creation_date")
+    @NotNull(message = "Дата создания обязательна")
+    @PastOrPresent(message = "Дата создания должна быть в прошлом или настоящем")
     @Schema(description = "Дата создания заявки")
     private LocalDateTime creationDate;
 
+    @NotNull(message = "Кредитное предложение обязательно")
     @Type(JsonType.class)
-    @Column(columnDefinition = "jsonb")
     @Schema(description = "Выбранное кредитное предложение")
     private LoanOfferDto appliedOffer;
 
-    @Column(name = "sign_date")
     @Schema(description = "Дата подписания")
     private LocalDateTime signDate;
 
-    @Column(name = "ses_code")
+    @NotBlank(message = "СЭС-код не может быть пустым")
+    @Size(min = 6, max = 50, message = "СЭС-код должен быть от 6 до 50 символов")
     @Schema(description = "СЭС-код")
     private String sesCode;
 
+    @NotNull(message = "История статусов обязательна")
     @Type(JsonType.class)
-    @Column(name = "status_history", columnDefinition = "jsonb")
     @Schema(description = "История изменения статусов")
     private List<StatementStatusHistoryDto> statusHistory;
 }

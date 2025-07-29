@@ -15,6 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Employment {
 
     @Id
@@ -24,26 +25,24 @@ public class Employment {
     @Column(name = "employement_id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID employement_id;
 
-    @Schema(description = "Статус занятости", example = "EMPLOYED")
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "status_information", nullable = false)
+    @Column(name="employment_status", columnDefinition = "status_information", nullable = false) // определено в бд
     private EmploymentStatus employmentStatus;
 
-    @Schema(description = "ИНН работодателя", example = "1234567890")
+    @Column(name = "employer_inn", nullable = false)
     private String employerINN;
 
-    @Schema(description = "Ежемесячная зарплата", example = "100000")
+    @Column(name = "salary", nullable = false)
     private BigDecimal salary;
 
-    @Schema(description = "Должность", example = "MID_MANAGER")
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "position_info")
+    @Column(name="position", columnDefinition = "position_info", nullable = false) //определено в бд
     private Position position;
 
-    @Schema(description = "Общий стаж (в месяцах)", example = "120")
+    @Column(name = "work_experience_total", nullable = false)
     private Integer workExperienceTotal;
 
-    @Schema(description = "Стаж на текущем месте (в месяцах)", example = "24")
+    @Column(name = "work_experience_current", nullable = false)
     private Integer workExperienceCurrent;
 }
 

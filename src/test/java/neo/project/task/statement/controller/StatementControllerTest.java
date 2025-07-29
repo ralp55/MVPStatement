@@ -59,8 +59,8 @@ class StatementControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(mockResponse.size()))
-                .andExpect(jsonPath("$[0].requestedAmount").value(100000))
-                .andExpect(jsonPath("$[1].requestedAmount").value(150000));
+                .andExpect(jsonPath("$[0].requestedAmount").value(new BigDecimal("100000")))
+                .andExpect(jsonPath("$[1].requestedAmount").value(new BigDecimal(150000)));
 
         Mockito.verify(statementService, Mockito.times(1)).processStatementRequest(Mockito.any(LoanStatementRequestDto.class));
     }

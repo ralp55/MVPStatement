@@ -6,6 +6,10 @@
        http://www.liquibase.org/xml/ns/dbchangelog
        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
+    <changeSet id="0-create-uuid-extension" author="yourname" runOnChange="true" runAlways="true">
+        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+    </changeSet>
+
     <changeSet id="1-create-credit-table" author="yourname">
         <createTable tableName="credit">
             <column name="credit_id" type="uuid">
@@ -40,8 +44,7 @@
             </column>
         </createTable>
 
-        <addDefaultValue tableName="credit" columnName="credit_id" defaultValueComputed="uuid_generate_v4()"/>
-        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+
     </changeSet>
 
 </databaseChangeLog>

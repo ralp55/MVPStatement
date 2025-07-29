@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import neo.project.task.statement.dto.LoanOfferDto;
 import neo.project.task.statement.dto.LoanStatementRequestDto;
 import neo.project.task.statement.service.StatementServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,7 @@ import java.util.List;
 @Tag(name = "Statement API", description = "API для рассчета возможных условий")
 @RequiredArgsConstructor
 public class StatementController {
+    @Autowired
     private final StatementServiceInterface statementService;
     @Operation(
             summary = "Получение кредитных предложений",
@@ -39,11 +42,51 @@ public class StatementController {
                             responseCode = "400",
                             description = "Некорректные входные данные",
                             content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "401",
+                            description = "Неавторизованный доступ",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "403",
+                            description = "Доступ запрещен",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Ресурс не найден",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "Конфликт данных",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "415",
+                            description = "Неподдерживаемый тип данных",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "429",
+                            description = "Слишком много запросов",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Внутренняя ошибка сервера",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "503",
+                            description = "Сервис временно недоступен",
+                            content = @Content
                     )
             }
     )
     @PostMapping("/offers")
-    public ResponseEntity<List<LoanOfferDto>> getLoanOffers(@RequestBody LoanStatementRequestDto request) {
+    public ResponseEntity<List<LoanOfferDto>> getLoanOffers(@Valid @RequestBody LoanStatementRequestDto request) {
         log.info("Received loan request: {}", request);
         List<LoanOfferDto> offers = statementService.processStatementRequest(request);
         log.info("Successfully generated {} loan offers", offers.size());

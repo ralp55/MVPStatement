@@ -19,7 +19,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "statement")
-@Schema(description = "Заявка")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Statement {
 
     @Id
@@ -27,43 +27,34 @@ public class Statement {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "statement_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    @Schema(description = "ID заявки")
     private UUID statementId;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @Schema(description = "Клиент")
     private Client client;
 
-    @Column(name = "credit_id")
-    @Schema(description = "ID кредита")
+    @Column(name = "credit_id", nullable = false)
     private UUID creditId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    @Schema(description = "Текущий статус заявки")
+    @Column(name = "status", nullable = false)
     private ApplicationStatus status;
 
-    @Column(name = "creation_date")
-    @Schema(description = "Дата создания заявки")
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
     @Type(JsonType.class)
-    @Column(columnDefinition = "jsonb")
-    @Schema(description = "Выбранное кредитное предложение")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private LoanOffer appliedOffer;
 
-    @Column(name = "sign_date")
-    @Schema(description = "Дата подписания")
+    @Column(name = "sign_date", nullable = false)
     private LocalDateTime signDate;
 
-    @Column(name = "ses_code")
-    @Schema(description = "СЭС-код")
+    @Column(name = "ses_code", nullable = false)
     private String sesCode;
 
     @Type(JsonType.class)
-    @Column(name = "status_history", columnDefinition = "jsonb")
-    @Schema(description = "История изменения статусов")
+    @Column(name = "status_history", columnDefinition = "jsonb", nullable = false)
     @OneToMany(mappedBy = "statement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StatementStatusHistory> statusHistory = new ArrayList<>();
 }

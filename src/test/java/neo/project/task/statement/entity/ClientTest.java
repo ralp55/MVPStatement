@@ -39,7 +39,7 @@ public class ClientTest {
         client.setBirthDate(birthDate);
         client.setEmail(email);
         client.setGender(gender);
-        client.setMarualStatus(maritalStatus);
+        client.setMaritalStatus(maritalStatus);
         client.setDependentAmount(dependents);
         client.setPassport(passport);
         client.setEmployment(employment);
@@ -52,7 +52,7 @@ public class ClientTest {
         assertEquals(birthDate, client.getBirthDate());
         assertEquals(email, client.getEmail());
         assertEquals(gender, client.getGender());
-        assertEquals(maritalStatus, client.getMarualStatus());
+        assertEquals(maritalStatus, client.getMaritalStatus());
         assertEquals(dependents, client.getDependentAmount());
         assertEquals(passport, client.getPassport());
         assertEquals(employment, client.getEmployment());

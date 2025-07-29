@@ -1,10 +1,6 @@
 package neo.project.task.statement.entity;
 
-import neo.project.task.statement.entity.Statement;
-import neo.project.task.statement.entity.Client;
-import neo.project.task.statement.entity.StatementStatusHistory;
 import neo.project.task.statement.dto.ApplicationStatus;
-import neo.project.task.statement.dto.LoanOfferDto;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -23,7 +19,7 @@ public class StatementTest {
         UUID statementId = UUID.randomUUID();
         Client client = new Client();
         UUID creditId = UUID.randomUUID();
-        ApplicationStatus status = ApplicationStatus.PREAPPROVAL;
+        ApplicationStatus status = ApplicationStatus.PREAPPROVED;
         LocalDateTime creationDate = LocalDateTime.now();
         LoanOffer appliedOffer = new LoanOffer();
         LocalDateTime signDate = LocalDateTime.now();

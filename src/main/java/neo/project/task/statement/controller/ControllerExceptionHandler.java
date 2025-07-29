@@ -16,16 +16,16 @@ import java.util.Map;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-    private static ResponseEntity<Map<String, String>> buildResponse(String ex, HttpStatus serviceUnavailable) {
+    private static ResponseEntity<Map<String, String>> buildResponse(String errorMessage, HttpStatus status) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", ex);
-        return ResponseEntity.status(serviceUnavailable).body(response);
+        response.put("error", errorMessage);
+        return ResponseEntity.status(status).body(response);
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, String>> handleRuntimeException(RuntimeException ex) {
         log.error("RuntimeException: {}", ex.getMessage(), ex);
-        return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return buildResponse(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
@@ -42,7 +42,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(Exception ex) {
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         log.error("Unhandled exception: {}", ex.getMessage(), ex);
         return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }

@@ -15,11 +15,14 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
+
+
 server:
   port: 8081
-deal:
-  statement:
-    url: http://localhost:8081/deal/statement
-  offer:
-    select:
-      url: http://localhost:8081/deal/offer/select
+
+external:
+  deal-service:
+    base-url: http://localhost:8081
+    endpoints:
+      statement: /deal/statement
+      offer-select: /deal/offer/select

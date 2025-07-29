@@ -1,13 +1,13 @@
 package neo.project.task.statement.dto;
 
 public enum ApplicationStatus{
-    PREAPPROVAL,
+    PREAPPROVED,
     APPROVED,
-    CC_DENIED,
+    CC_DENIED, //не знаю как расшифровать это, так было на сайте
     CC_APPROVED,
-    PREPARE_DOCUMENTS,
+    PREPARED_DOCUMENTS,
     DOCUMENTS_CREATED,
-    CLIENT_DINIED,
+    CLIENT_DEINIED,
     DOCUMENT_SIGNED,
     CREDIT_ISSUED
 }

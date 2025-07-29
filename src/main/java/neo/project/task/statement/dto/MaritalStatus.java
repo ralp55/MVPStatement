@@ -1,9 +1,19 @@
 package neo.project.task.statement.dto;
 
-public enum MaritalStatus{
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Семейное положение клиента")
+public enum MaritalStatus {
+
+    @Schema(description = "Холост/Не замужем")
     SINGLE,
-    MARRIED, 
-    NON_MARRIED,
+
+    @Schema(description = "Женат/Замужем")
+    MARRIED,
+
+    @Schema(description = "Разведен(а)")
     DIVORCED,
-    WIDOW_WIDOWER
+
+    @Schema(description = "Вдовец/Вдова")
+    WIDOWED // поменять в бд
 }

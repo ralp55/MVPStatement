@@ -15,51 +15,40 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "Информация о кредите")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Credit {
-
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "credit_id", columnDefinition = "uuid", updatable = false, nullable = false)
-    @Schema(description = "ID кредита")
     private UUID creditId;
 
-    @Column(name = "amount")
-    @Schema(description = "Сумма кредита")
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "term")
-    @Schema(description = "Срок кредита (в месяцах)")
+    @Column(name = "term", nullable = false)
     private Integer term;
 
-    @Column(name = "monthly_payment")
-    @Schema(description = "Ежемесячный платеж")
+    @Column(name = "monthly_payment", nullable = false)
     private BigDecimal monthlyPayment;
 
-    @Column(name = "rate")
-    @Schema(description = "Процентная ставка")
+    @Column(name = "rate", nullable = false)
     private BigDecimal rate;
 
-    @Column(name = "psk")
-    @Schema(description = "Полная стоимость кредита (ПСК)")
+    @Column(name = "psk", nullable = false)
     private BigDecimal psk;
 
-    @Column(name = "payment_shedule", columnDefinition = "jsonb")
-    @Schema(description = "График платежей")
+    @Column(name = "payment_shedule", columnDefinition = "jsonb", nullable = false)
     private String paymentSchedule;
 
-    @Column(name = "insurance_enabled")
-    @Schema(description = "Страховка включена")
+    @Column(name = "insurance_enabled", nullable = false)
     private Boolean insuranceEnabled;
 
-    @Column(name = "salary_client")
-    @Schema(description = "Является ли клиентом с зарплатным проектом")
+    @Column(name = "salary_client", nullable = false)
     private Boolean salaryClient;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "credit_status")
-    @Schema(description = "Статус кредита")
+    @Column(name = "credit_status", nullable = false)
     private CreditStatusInformation creditStatus;
 }

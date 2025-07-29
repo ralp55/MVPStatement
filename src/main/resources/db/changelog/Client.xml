@@ -6,6 +6,10 @@
        http://www.liquibase.org/xml/ns/dbchangelog
        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
+    <changeSet id="0-create-uuid-extension" author="yourname" runOnChange="true" runAlways="true">
+        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
+    </changeSet>
+
     <changeSet id="1-create-client-table" author="yourname">
         <createTable tableName="client">
             <column name="client_id" type="uuid">
@@ -24,7 +28,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar(255)">
-                <constraints nullable="true"/>
+                <constraints nullable="true" unique="true"/>
             </column>
             <column name="gender" type="varchar(255)">
                 <constraints nullable="true"/>
@@ -45,9 +49,6 @@
                 <constraints nullable="true"/>
             </column>
         </createTable>
-
-        <!-- UUID generation extension for Postgres -->
-        <sql>CREATE EXTENSION IF NOT EXISTS "uuid-ossp";</sql>
     </changeSet>
 
 </databaseChangeLog>
